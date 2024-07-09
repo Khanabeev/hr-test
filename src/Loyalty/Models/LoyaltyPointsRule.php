@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Src\Loyalty\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LoyaltyAccount;
 use Illuminate\Http\Request;
+use Src\Loyalty\Models\LoyaltyAccount;
 
 class AccountController extends Controller
 {
