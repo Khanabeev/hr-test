@@ -19,7 +19,6 @@ use Src\Loyalty\Exceptions\AccountNotFoundException;
 use Src\Loyalty\Exceptions\BalanceException;
 use Src\Loyalty\Exceptions\LoyaltyPointsException;
 use Src\Loyalty\Exceptions\TransactionNotFoundException;
-use Src\Loyalty\Models\LoyaltyPointsTransaction;
 
 class LoyaltyPointsController extends Controller
 {
