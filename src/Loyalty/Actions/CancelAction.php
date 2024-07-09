@@ -6,7 +6,7 @@ use Src\Loyalty\Exceptions\TransactionNotFoundException;
 use Src\Loyalty\Models\LoyaltyPointsTransaction;
 use Symfony\Component\HttpFoundation\Response;
 
-class CancelTransactionAction
+class CancelAction
 {
     /**
      * @throws TransactionNotFoundException

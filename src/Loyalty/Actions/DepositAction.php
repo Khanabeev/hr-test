@@ -7,7 +7,7 @@ use Src\Loyalty\DataTransferObject\PaymentLoyaltyPointsDTO;
 use Src\Loyalty\Models\LoyaltyPointsRule;
 use Src\Loyalty\Models\LoyaltyPointsTransaction;
 
-class PerformPaymentLoyaltyPointsAction
+class DepositAction
 {
     public static function execute(PaymentLoyaltyPointsDTO $dto): LoyaltyPointsTransaction
     {
