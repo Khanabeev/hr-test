@@ -1,26 +1,27 @@
 <?php
 
-namespace App\Mail;
+namespace Src\Loyalty\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class AccountActivated extends Mailable
+class LoyaltyPointsReceived extends Mailable
 {
     use Queueable, SerializesModels;
 
     private $balance;
+    private $pointsAmount;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($balance)
+    public function __construct($pointsAmount, $balance)
     {
         $this->balance = $balance;
+        $this->pointsAmount = $pointsAmount;
     }
 
     /**
@@ -30,8 +31,9 @@ class AccountActivated extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.accountActivated')->with([
+        return $this->view('emails.loyaltyPointsReceived')->with([
             'balance' => $this->balance,
+            'points' => $this->pointsAmount,
         ]);
     }
 }
