@@ -11,7 +11,7 @@ class WithdrawRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return auth()->check();
     }
@@ -21,15 +21,14 @@ class WithdrawRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'account_type' => ['required', 'in:phone,card,email'],
             'account_id' => ['required', 'string'],
             'description' => ['required', 'string'],
-            'payment_id' => ['required', 'string'],
             'payment_amount' => ['required', 'numeric'],
-            'payment_time' => ['required', 'numeric'],
+            'points_amount' => ['required', 'numeric'],
         ];
     }
 }
