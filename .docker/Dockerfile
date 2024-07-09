@@ -4,7 +4,7 @@ FROM php:8.0.11-fpm-alpine
 WORKDIR /var/www
 
 # Install dependencies
-RUN apk -v --update add \
+RUN apk -v --update --no-cache add \
     zip \
     mc \
     unzip \
@@ -24,8 +24,7 @@ RUN apk add zlib-dev libzip-dev freetype-dev libxml2-dev \
 RUN curl -sS https://getcomposer.org/installer | php -- \
         --filename=composer \
         --install-dir=/usr/local/bin && \
-        echo "alias composer='composer'" >> /root/.bashrc && \
-        composer
+        chmod +x /usr/local/bin/composer
 
 RUN addgroup -S www && adduser -S www -G www
 
