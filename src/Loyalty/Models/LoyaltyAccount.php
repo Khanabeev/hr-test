@@ -2,11 +2,11 @@
 
 namespace Src\Loyalty\Models;
 
-use App\Mail\AccountActivated;
-use App\Mail\AccountDeactivated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Src\Loyalty\Mail\AccountActivated;
+use Src\Loyalty\Mail\AccountDeactivated;
 
 class LoyaltyAccount extends Model
 {
