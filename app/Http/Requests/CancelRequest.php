@@ -25,6 +25,7 @@ class CancelRequest extends FormRequest
     {
         return [
             'cancellation_reason' => ['required', 'string'],
+            'transaction_id' => ['required', 'numeric', 'exists:transactions,id'],
         ];
     }
 }
