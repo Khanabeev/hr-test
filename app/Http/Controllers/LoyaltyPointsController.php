@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CancelRequest;
 use App\Http\Requests\DepositRequest;
 use App\Http\Resources\LoyaltyPointsTransactionResource;
 use Illuminate\Support\Facades\Log;
+use Src\Loyalty\Actions\CancelTransactionAction;
 use Src\Loyalty\Actions\GetLoyaltyAccountAction;
 use Src\Loyalty\Actions\PerformPaymentLoyaltyPointsAction;
 use Src\Loyalty\Actions\SendNotificationAction;
 use Src\Loyalty\DataTransferObject\PaymentLoyaltyPointsDTO;
 use Src\Loyalty\Exceptions\AccountIsNotActiveException;
 use Src\Loyalty\Exceptions\AccountNotFoundException;
+use Src\Loyalty\Exceptions\TransactionNotFoundException;
 use Src\Loyalty\Models\LoyaltyAccount;
 use Src\Loyalty\Models\LoyaltyPointsTransaction;
 
@@ -28,7 +31,10 @@ class LoyaltyPointsController extends Controller
 
         $data = $request->validated();
 
-        $account = GetLoyaltyAccountAction::execute($data['account_type'], $data['account_id']);
+        $account = GetLoyaltyAccountAction::execute(
+            $data['account_type'],
+            $data['account_id']
+        );
 
         $dto = PaymentLoyaltyPointsDTO::fromArray($data);
         $transaction = PerformPaymentLoyaltyPointsAction::execute($dto);
@@ -38,23 +44,17 @@ class LoyaltyPointsController extends Controller
         return new LoyaltyPointsTransactionResource($transaction);
     }
 
-    public function cancel()
+    /**
+     * @throws TransactionNotFoundException
+     */
+    public function cancel(CancelRequest $request): void
     {
-        $data = $_POST;
+        $data = $request->validated();
 
-        $reason = $data['cancellation_reason'];
-
-        if ($reason == '') {
-            return response()->json(['message' => 'Cancellation reason is not specified'], 400);
-        }
-
-        if ($transaction = LoyaltyPointsTransaction::where('id', '=', $data['transaction_id'])->where('canceled', '=', 0)->first()) {
-            $transaction->canceled = time();
-            $transaction->cancellation_reason = $reason;
-            $transaction->save();
-        } else {
-            return response()->json(['message' => 'Transaction is not found'], 400);
-        }
+        CancelTransactionAction::execute(
+            $data['transaction_id'],
+            $data['cancellation_reason']
+        );
     }
 
     public function withdraw()
