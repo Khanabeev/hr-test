@@ -2,13 +2,14 @@
 
 namespace Src\Loyalty\Actions;
 
+use Illuminate\Support\Facades\Log;
 use Src\Loyalty\DataTransferObject\PaymentLoyaltyPointsDTO;
 use Src\Loyalty\Models\LoyaltyPointsRule;
 use Src\Loyalty\Models\LoyaltyPointsTransaction;
 
 class PerformPaymentLoyaltyPointsAction
 {
-    public static function execute(PaymentLoyaltyPointsDTO $dto)
+    public static function execute(PaymentLoyaltyPointsDTO $dto): LoyaltyPointsTransaction
     {
         $points_amount = 0;
 
@@ -21,7 +22,7 @@ class PerformPaymentLoyaltyPointsAction
             };
         }
 
-        return LoyaltyPointsTransaction::create([
+        $transaction = LoyaltyPointsTransaction::create([
             'account_id' => $dto->account_id,
             'points_rule' => $pointsRule?->id,
             'points_amount' => $points_amount,
@@ -30,6 +31,10 @@ class PerformPaymentLoyaltyPointsAction
             'payment_amount' => $dto->payment_amount,
             'payment_time' => $dto->payment_time,
         ]);
+
+        Log::info($transaction);
+
+        return $transaction;
     }
 
 }
