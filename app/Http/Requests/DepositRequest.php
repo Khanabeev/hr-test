@@ -26,10 +26,10 @@ class DepositRequest extends FormRequest
         return [
             'account_type' => ['required', 'in:phone,card,email'],
             'account_id' => ['required', 'string'],
-            'description' => ['required'],
-            'payment_id' => ['required'],
-            'payment_amount' => ['required'],
-            'payment_time' => ['required'],
+            'description' => ['required', 'string'],
+            'payment_id' => ['required', 'string'],
+            'payment_amount' => ['required', 'numeric'],
+            'payment_time' => ['required', 'numeric'],
         ];
     }
 }
